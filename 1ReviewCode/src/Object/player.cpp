@@ -63,17 +63,17 @@ void cPlayer::moveRight() {
 
 
 void cPlayer::moveBound() {
-  if ((m_pos.x < edge.left) ||
-      (m_pos.x + m_size.x > edge.right))
+  if ((m_pos.x < m_edge.left) ||
+      (m_pos.x + m_size.x > m_edge.right))
   {
-    m_pos.x = std::max(m_pos.x, edge.left);
-    m_pos.x = std::min(m_pos.x, edge.right - m_size.x);
+    m_pos.x = std::max(m_pos.x, m_edge.left);
+    m_pos.x = std::min(m_pos.x, m_edge.right - m_size.x);
   }
 
-  if ((m_pos.y < edge.down) ||
-      (m_pos.y + m_size.y > edge.top))
+  if ((m_pos.y < m_edge.down) ||
+      (m_pos.y + m_size.y > m_edge.top))
   {
-    m_pos.y = std::max(m_pos.y, edge.down);
-    m_pos.y = std::min(m_pos.y, edge.top - m_size.y);
+    m_pos.y = std::max(m_pos.y, m_edge.down);
+    m_pos.y = std::min(m_pos.y, m_edge.top - m_size.y);
   }
 }

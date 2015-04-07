@@ -22,7 +22,7 @@ private:
   void moveBound();
 
   AppEnv&    m_env;
-  WindowEdge edge;
+  WindowEdge m_edge;
 
   short m_directionStatus;
   enum DirectionStatus {
