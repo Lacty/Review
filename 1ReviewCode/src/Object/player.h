@@ -24,11 +24,10 @@ private:
   AppEnv&    m_env;
   WindowEdge m_edge;
 
-  short m_directionStatus;
   enum DirectionStatus {
     Left,
     Right
-  };
+  } m_directionStatus;
 
   float2  m_pos;
   float2  m_size;
