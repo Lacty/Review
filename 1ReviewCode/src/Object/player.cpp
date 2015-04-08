@@ -70,10 +70,10 @@ void cPlayer::moveBound() {
     m_pos.x = std::min(m_pos.x, m_edge.right - m_size.x);
   }
 
-  if ((m_pos.y < m_edge.down) ||
+  if ((m_pos.y < m_edge.bottom) ||
       (m_pos.y + m_size.y > m_edge.top))
   {
-    m_pos.y = std::max(m_pos.y, m_edge.down);
+    m_pos.y = std::max(m_pos.y, m_edge.bottom);
     m_pos.y = std::min(m_pos.y, m_edge.top - m_size.y);
   }
 }
