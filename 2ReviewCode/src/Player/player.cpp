@@ -50,8 +50,9 @@ void cPlayer::chengeDirection() {
 }
 
 void cPlayer::setPosOnGround() {
-  if (m_pos.y > Ground_Pos) return;
+  if (m_pos.y >= Ground_Pos) return;
   m_pos.y = Ground_Pos;
+  m_vy    = 0.0f;
   jump_status = JumpStatus::Landing;
 }
 
@@ -69,7 +70,7 @@ void cPlayer::runJump() {
   if (jump_status != JumpStatus::Landing) return;
   if (!cEnv::get().isPushKey(GLFW_KEY_SPACE)) return;
 
-  const float JumpPower = 5.0f;
+  const float JumpPower = 10.0f;
   m_vy += JumpPower;
   m_pos.y += m_vy;
 
