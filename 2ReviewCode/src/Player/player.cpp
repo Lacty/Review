@@ -45,6 +45,11 @@ void cPlayer::update() {
 }
 
 void cPlayer::draw() {
+  drawPlayer();
+  drawShot();
+}
+
+void cPlayer::drawPlayer() {
   drawTextureBox(m_pos.x, m_pos.y, m_size.x, m_size.y,
                  0, 0, m_size.x, m_size.y,
                  m_image,
@@ -52,6 +57,18 @@ void cPlayer::draw() {
                  0.0f,
                  Vec2f(static_cast<float>(direction_status), 1),
                  Vec2f(m_size.x * 0.5f, m_size.y * 0.5f));
+}
+
+void cPlayer::drawShot() {
+  const float2 size   = float2(20, 20);
+  const float  line_w = 2;
+
+  for (int i = 0; i < Shot_Max; ++i) {
+    if (m_shots[i].status != ShotStatus::Active) continue;
+
+    drawBox(m_shots[i].pos.x, m_shots[i].pos.y,
+            size.x, size.y, line_w, Color::black);
+  }
 }
 
 
@@ -89,23 +106,44 @@ void cPlayer::runJump() {
 }
 
 void cPlayer::runShot() {
-
+  createShots();
+  moveShots();
+  killShots();
 }
 
 void cPlayer::createShots() {
   if (cEnv::get().isPushButton(Mouse::LEFT)) return;
   for (int i = 0; i < Shot_Max; ++i) {
-    if (m_shots[i].status != ShotStatus::Inactive) return;
+    if (m_shots[i].status != ShotStatus::Inactive) continue;
     // status == ShotStatus::Inactive ‚È‚çˆ—‚ð’Ê‚é
 
     // Player‚Ìî•ñ‚ð“Ç‚Ýž‚Þ
     m_shots[i].direction = direction_status;
     m_shots[i].pos       = m_pos;
-    m_shots[i].speed    *= static_cast(m_shots[i].direction); //err
+    m_shots[i].speed    *= static_cast<float>(m_shots[i].direction);
     m_shots[i].status    = ShotStatus::Active;
+
+    break;
   }
 }
 
 void cPlayer::moveShots() {
+  for (int i = 0; i < Shot_Max; ++i) {
+    if (m_shots[i].status != ShotStatus::Active) continue;
 
+    m_shots[i].pos.x += m_shots[i].speed;
+  }
+}
+
+void cPlayer::killShots() {
+  for (int i = 0; i < Shot_Max; ++i) {
+    if (m_shots[i].status != ShotStatus::Active) continue;
+
+    // ‰æ–Ê‚©‚çŠO‚ê‚½‚ç–¢Žg—p‚É‚·‚é
+    if ((m_shots[i].pos.x < edge.left) ||
+        (m_shots[i].pos.x > edge.right))
+    {
+      m_shots[i].status = ShotStatus::Inactive;
+    }
+  }
 }

@@ -13,14 +13,19 @@ public:
 
 private:
 
+  void drawPlayer();
   void runGravity();
   void runJump();
   void chengeDirection();
   void setPosOnGround();
 
+  void drawShot();
   void runShot();
   void createShots();
   void moveShots();
+  void killShots();
+
+  WindowEdge edge;
 
   enum class JumpStatus {
     Landing,
