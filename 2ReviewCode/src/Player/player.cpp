@@ -120,6 +120,7 @@ void cPlayer::createShots() {
     // Player‚Ìî•ñ‚ğ“Ç‚İ‚Ş
     m_shots[i].direction = direction_status;
     m_shots[i].pos       = m_pos;
+    m_shots[i].speed     = ShotSpeed::Shot_Speed;
     m_shots[i].speed    *= static_cast<float>(m_shots[i].direction);
     m_shots[i].status    = ShotStatus::Active;
 
