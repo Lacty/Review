@@ -17,13 +17,23 @@ enum InitPos {
   Pos_Y = Ground_Pos
 };
 
+enum ShotSpeed {
+  Shot_Speed = 20
+};
+
 cPlayer::cPlayer() :
 m_image("res/player_img.png"),
 direction_status(Direction::Right),
 jump_status(JumpStatus::Landing),
 m_pos(Pos_X, Pos_Y),
 m_vy(0.0f),
-m_size(Size_W, Size_H) {}
+m_size(Size_W, Size_H)
+{
+  for (int i = 0; i < Shot_Max; ++i) {
+    m_shots[i].status = ShotStatus::Inactive;
+    m_shots[i].speed  = Shot_Speed;
+  }
+}
 
 
 void cPlayer::update() {
@@ -31,6 +41,7 @@ void cPlayer::update() {
   runJump();
   runGravity();
   setPosOnGround();
+  runShot();
 }
 
 void cPlayer::draw() {
@@ -75,4 +86,26 @@ void cPlayer::runJump() {
   m_pos.y += m_vy;
 
   jump_status = JumpStatus::Jumping;
+}
+
+void cPlayer::runShot() {
+
+}
+
+void cPlayer::createShots() {
+  if (cEnv::get().isPushButton(Mouse::LEFT)) return;
+  for (int i = 0; i < Shot_Max; ++i) {
+    if (m_shots[i].status != ShotStatus::Inactive) return;
+    // status == ShotStatus::Inactive ‚È‚çˆ—‚ð’Ê‚é
+
+    // Player‚Ìî•ñ‚ð“Ç‚Ýž‚Þ
+    m_shots[i].direction = direction_status;
+    m_shots[i].pos       = m_pos;
+    m_shots[i].speed    *= static_cast(m_shots[i].direction); //err
+    m_shots[i].status    = ShotStatus::Active;
+  }
+}
+
+void cPlayer::moveShots() {
+
 }
