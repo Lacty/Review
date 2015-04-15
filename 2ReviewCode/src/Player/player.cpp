@@ -112,7 +112,7 @@ void cPlayer::runShot() {
 }
 
 void cPlayer::createShots() {
-  if (cEnv::get().isPushButton(Mouse::LEFT)) return;
+  if (!cEnv::get().isPushButton(Mouse::LEFT)) return;
   for (int i = 0; i < Shot_Max; ++i) {
     if (m_shots[i].status != ShotStatus::Inactive) continue;
     // status == ShotStatus::Inactive ‚È‚çˆ—‚ð’Ê‚é
